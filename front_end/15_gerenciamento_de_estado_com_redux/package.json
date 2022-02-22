@@ -1,0 +1,15 @@
+{
+  "name": "15_gerenciamento_de_estado_com_redux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "redux.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redux": "^4.1.2"
+  }
+}
