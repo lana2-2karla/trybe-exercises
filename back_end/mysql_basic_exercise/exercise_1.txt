@@ -1,0 +1,23 @@
+// Retorne o primeiro nome da tabela actor como "Nome da Pessoa" em ordem decrescente do primeito nome e sem repetições
+
+R: SELECT DISTINCT first_name AS 'Nome da Pessoa' FROM sakila.actor ORDER BY first_name DESC;
+
+
+// Quantos sobrenomes únicos temos na tabela actor??
+
+R: SELECT DISTINCT last_name FROM sakila.actor;
+
+
+// Selecione 50 cidades a partir de Angra dos Reis na tabela city
+
+R: SELECT city_id FROM sakila.city WHERE city = 'Angra dos Reis';
+   SELECT city FROM sakila.city limit 50 OFFSET 24;
+
+
+// Selecione 25 filmes a partir de APOLLO TEEN na tabela film em ordem decrescente de duração do filme(length)
+
+R: SELECT * FROM sakila.film WHERE title = 'APOLLO TEEN';
+  com erro SELECT * FROM sakila.film ORDER BY(lenght AS 'Duração do filme') DESC LIMIT 25 OFFSET 32 
+
+// Selecione 30 atores com seu primeiro e último nome como "Nome do Ator" a partir de ZERO CAGE na tabela actor em oredm decrescente do último nome
+R: 
