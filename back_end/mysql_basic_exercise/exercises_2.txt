@@ -1,0 +1,54 @@
+Busque por clientes que possuem ‘ta’ em algum lugar do seu primeiro
+nome, tendo como status ‘ativo’ e o ‘store_id’ igual a 2
+
+R: SELECT * FROM sakila.customer
+WHERE first_name LIKE '%ta%'
+AND active = 1
+AND store_id = 2; 
+
+--------------------------------------------------------------
+Busque por endereços que tenham ‘boul’ em alguma parte do campo
+‘address’, que contenham ‘central’ em alguma parte do campo ‘district’ e o
+‘postal_code’ seja diferente de ‘20777’
+
+R: SELECT * FROM sakila.address
+WHERE address LIKE '%boul%'
+AND district LIKE '%central%'
+AND postal_code <> 20777;
+
+---------------------------------------------------------------
+Busque por pagamentos cujo o dia de pagamento seja ‘10’, a hora de
+pagamento seja ‘19’ e o ‘amount’ seja menor ou igual a ‘6.99’ e maior ou
+igual a ‘3.99’
+
+R: SELECT * FROM sakila.payment
+WHERE DAY(payment_date) = 10
+AND HOUR(payment_date) = 19
+AND amount <= 6.99 AND amount >= 3.99; 
+
+-----------------------------------------------------------------
+Busque por filmes onde:
+●
+O título tem 2 letras aleatórias seguidas da palavra ‘TA’ ou tem ‘TA’
+seguida de duas letras aleatórias e;
+●
+Tenha um ‘replacement_cost’ igual a 27.99, 26.99 ou 12.99
+
+R: SELECT * FROM sakila.film
+WHERE (title LIKE '__ta%' OR title LIKE '%ta__')
+AND replacement_cost IN (27.99, 26.99, 12.99); 
+
+-----------------------------------------------------------------
+Busque por pagamentos onde:
+● O ‘customer_id’ é igual a 2 ou 5 e;
+● A data de pagamento está entre 10 e 20 de julho de 2005
+
+R: SELECT * FROM sakila.payment
+WHERE (customer_id = 2 OR customer_id = 5)
+AND payment_date BETWEEN '2005-07-10' AND '2005-07-20';
+
+ou
+
+SELECT * FROM sakila.payment
+WHERE customer_id IN (1,5)
+AND payment_date BETWEEN '2005-07-10' AND '2005-07-20';
