@@ -1,9 +1,9 @@
-1 - Escreva uma query que exiba a diferença entre o maior e o menor salário
+2 - 🚀 Escreva uma query que exiba a diferença entre o maior e o menor salário
 
 SELECT MAX(SALARY) - MIN(SALARY) FROM hr.employees;
 
 ---------------------------------------------------------------------------
-2 - Escreva uma query que exiba a média salarial de cada JOB_ID , 
+3 - 🚀 Escreva uma query que exiba a média salarial de cada JOB_ID , 
 ordenando pela média salarial em ordem decrescente
 
 SELECT JOB_ID, AVG(SALARY) AS 'Média_salarial' FROM hr.employees
@@ -11,13 +11,13 @@ GROUP BY JOB_ID
 ORDER BY Média_salarial DESC;
  
 --------------------------------------------------------------------------
-3 - Escreva uma query que exiba quatro informações: o maior salário, o menor salário, 
+5 - 🚀 Escreva uma query que exiba quatro informações: o maior salário, o menor salário, 
 a soma de todos os salários e a média dos salários. Todos os valores devem ser formatados para ter apenas duas casas decimais. 
 
 SELECT MAX(SALARY), MIN(SALARY), SUM(SALARY), ROUND(AVG(SALARY), 2) FROM hr.employees;
 
 ---------------------------------------------------------------------------
-4 - Escreva um query que exiba média salarial e o número de funcionários de todos os 
+10 - 🚀 Escreva um query que exiba média salarial e o número de funcionários de todos os 
 departamentos com mais de dez funcionários. Dica: agrupe pelo DEPARTMENT_ID
 
 SELECT AVG(SALARY), COUNT(DEPARTMENT_ID) FROM hr.employees
@@ -25,8 +25,20 @@ GROUP BY DEPARTMENT_ID
 HAVING COUNT(DEPARTMENT_ID) > 10;
 
 --------------------------------------------------------------------------
-5 - Escreva uma query que atualize a coluna PHONE_NUMBER , de modo que todos os telefones iniciados por 515 agora devem iniciar com 777 
+11 - 🚀 Escreva uma query que atualize a coluna PHONE_NUMBER , de modo que todos os telefones iniciados por 515 agora devem iniciar com 777 
 
 UPDATE hr.employees
 SET phone_number = REPLACE(phone_number, '515', '777')
 WHERE phone_number LIKE '515%';
+
+---------------------------------------------------------------------------
+14 - 🚀 Escreva uma query que exiba as seguintes informações de cada funcionário:
+ id, primeiro nome e dia do mês no qual foi contratado (exiba somente o dia).
+
+SELECT EMPLOYEE_ID, LAST_NAME, DAY(HIRE_DATE) AS 'DAY' FROM hr.employees;
+
+----------------------------------------------------------------------------
+18 - 🚀 Escreva uma query que exiba as seguintes informações de cada funcionário:
+ nome, sobrenome, tempo que trabalha na empresa (em dias).
+
+ SELECT FIRST_NAME, LAST_NAME, DATEDIFF(CURRENT_DATE(), HIRE_DATE) AS DAYS_WORKED FROM hr.employees;
