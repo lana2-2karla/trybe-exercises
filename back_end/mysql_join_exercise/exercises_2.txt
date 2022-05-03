@@ -1,0 +1,28 @@
+🚀 Exercício 2: Utilizando o INNER JOIN, faça uma busca que retorne o número de vendas para cada filme 
+que possui um número maior de vendas internacionais (international_sales) do que vendas nacionais (domestic_sales).
+
+SELECT mvs.title AS Filmes, bo.domestic_sales + bo.international_sales AS Vendas
+FROM Pixar.BoxOffice AS bo
+INNER JOIN Pixar.Movies AS mvs
+ON bo.movie_id = mvs.id
+WHERE bo.international_sales > bo.domestic_sales;
+----------------------------------------------------------------------------------------------
+
+🚀 Exercício 3: Utilizando o INNER JOIN, faça uma busca que retorne os filmes e sua avaliação (rating) em ordem decrescente.
+
+SELECT mvs.title AS Filmes, bo.rating AS Avaliação
+FROM Pixar.BoxOffice AS bo
+INNER JOIN Pixar.Movies AS mvs
+ON bo.movie_id = mvs.id
+ORDER BY Filmes DESC;
+
+-----------------------------------------------------------------------------------------------
+🚀 Exercício 6: Utilizando o INNER JOIN, selecione todas as informações dos filmes que estão em cartaz 
+(possuem theater_id diferente de NULL) com avaliação maior que 8.
+
+SELECT mvs.id, mvs.title, mvs.director, mvs.year, mvs.length_minutes, mvs.theater_id
+FROM Pixar.Movies AS mvs
+INNER JOIN Pixar.BoxOffice AS bo
+ON mvs.id = bo.movie_id
+WHERE mvs.theater_id <> 'NULL'
+AND bo.rating > 8;
