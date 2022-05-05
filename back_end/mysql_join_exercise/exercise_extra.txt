@@ -1,0 +1,137 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema boteco_ze
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema boteco_ze
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `boteco_ze` DEFAULT CHARACTER SET utf8 ;
+USE `boteco_ze` ;
+
+-- -----------------------------------------------------
+-- Table `boteco_ze`.`tb_produtos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `boteco_ze`.`tb_produtos` (
+  `produto_id` INT NOT NULL AUTO_INCREMENT,
+  `produto` VARCHAR(45) NOT NULL,
+  `preco_unit` DECIMAL(2) NOT NULL,
+  PRIMARY KEY (`produto_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `boteco_ze`.`tb_uf`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `boteco_ze`.`tb_uf` (
+  `uf_id` INT NOT NULL AUTO_INCREMENT,
+  `descriacao` VARCHAR(45) NOT NULL,
+  `sigla` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`uf_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `boteco_ze`.`tb_cidades`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `boteco_ze`.`tb_cidades` (
+  `cidade_id` INT NOT NULL AUTO_INCREMENT,
+  `descricao` VARCHAR(60) NOT NULL,
+  `uf_id` INT NOT NULL,
+  PRIMARY KEY (`cidade_id`),
+  INDEX `fk_tb_cidades_tb_uf1_idx` (`uf_id` ASC) VISIBLE,
+  CONSTRAINT `fk_tb_cidades_tb_uf1`
+    FOREIGN KEY (`uf_id`)
+    REFERENCES `boteco_ze`.`tb_uf` (`uf_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `boteco_ze`.`tb_clientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `boteco_ze`.`tb_clientes` (
+  `cliente_id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `endereco` VARCHAR(45) NULL,
+  `cidade_id` INT NOT NULL,
+  PRIMARY KEY (`cliente_id`),
+  INDEX `fk_tb_clientes_tb_cidades1_idx` (`cidade_id` ASC) VISIBLE,
+  CONSTRAINT `fk_tb_clientes_tb_cidades1`
+    FOREIGN KEY (`cidade_id`)
+    REFERENCES `boteco_ze`.`tb_cidades` (`cidade_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = '		';
+
+
+-- -----------------------------------------------------
+-- Table `boteco_ze`.`tb_formas_pg`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `boteco_ze`.`tb_formas_pg` (
+  `pg_id` INT NOT NULL AUTO_INCREMENT,
+  `descricao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`pg_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `boteco_ze`.`tb_pedidos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `boteco_ze`.`tb_pedidos` (
+  `pedido_id` INT NOT NULL AUTO_INCREMENT,
+  `data_pedido` DATETIME NOT NULL,
+  `quantidade` INT NOT NULL,
+  `preco_total` DECIMAL(2) NOT NULL,
+  `cliente_id` INT NOT NULL,
+  `pg_id` INT NOT NULL,
+  PRIMARY KEY (`pedido_id`),
+  INDEX `fk_tb_pedidos_tb_clientes1_idx` (`cliente_id` ASC) VISIBLE,
+  INDEX `fk_tb_pedidos_tb_formas_pg1_idx` (`pg_id` ASC) VISIBLE,
+  CONSTRAINT `fk_tb_pedidos_tb_clientes1`
+    FOREIGN KEY (`cliente_id`)
+    REFERENCES `boteco_ze`.`tb_clientes` (`cliente_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_pedidos_tb_formas_pg1`
+    FOREIGN KEY (`pg_id`)
+    REFERENCES `boteco_ze`.`tb_formas_pg` (`pg_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+COMMENT = '	';
+
+
+-- -----------------------------------------------------
+-- Table `boteco_ze`.`tb_produtos_has_tb_pedidos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `boteco_ze`.`tb_produtos_has_tb_pedidos` (
+  `produto_id` INT NOT NULL,
+  `pedido_id` INT NOT NULL,
+  `quantidade` INT NOT NULL,
+  PRIMARY KEY (`produto_id`, `pedido_id`),
+  INDEX `fk_tb_produtos_has_tb_pedidos_tb_pedidos1_idx` (`pedido_id` ASC) VISIBLE,
+  INDEX `fk_tb_produtos_has_tb_pedidos_tb_produtos1_idx` (`produto_id` ASC) VISIBLE,
+  CONSTRAINT `fk_tb_produtos_has_tb_pedidos_tb_produtos1`
+    FOREIGN KEY (`produto_id`)
+    REFERENCES `boteco_ze`.`tb_produtos` (`produto_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_produtos_has_tb_pedidos_tb_pedidos1`
+    FOREIGN KEY (`pedido_id`)
+    REFERENCES `boteco_ze`.`tb_pedidos` (`pedido_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
